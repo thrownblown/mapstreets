@@ -1,12 +1,8 @@
 
 var map;
 var myPoly;
-var path = [
-new google.maps.LatLng(37.78371,-122.40),
-new google.maps.LatLng(37.78370618798191,-122.408766746521),
-new google.maps.LatLng(37.79,-122.41)
-];
-
+var path = [];
+var gridCoord = [];
 var testLat = [];
 var testLing = [];
 //moding our big A Array to provide easy min/max methods
@@ -96,11 +92,50 @@ function getCorners(){
   });
   console.log('swCroner', Array.min(testLat),Array.min(testLing));
 }
-// $(document).ready(function(){
-//   $("a .showCorners").click(function(){
-//     console.log('yo');
-//     getCorners();
-//   });
-// });
+
+
+function applyGrid(){
+
+  var height = [];
+  var lat = Array.min(testLat);
+  while(lat < Array.max(testLat)){
+    height.push(lat);
+    lat += 0.0005;
+  }
+
+  var width = [];
+  var lng = Array.min(testLing);
+  while(lng < Array.max(testLing)){
+    width.push(lng);
+    lng += 0.0005;
+  }
+
+  for (var h =0; h < height.length; h++){
+    for (var w=0; w< width.length; w++){
+      var coord = new google.maps.LatLng(height[h],width[w]);
+      if (google.maps.geometry.poly.containsLocation(coord, myPoly)){
+        gridCoord.push(height[h].toString() + ',' + width[w].toString());
+      }
+    }
+  }
+  console.log(gridCoord);
+}
+
+function reverse(){
+  for (var i=0; i<gridCoord.length; i++){
+    var loc = gridCoord[i];
+    $.ajax({
+        url: 'http://www.mapquestapi.com/geocoding/v1/reverse?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56',
+        dataType: 'jsonp',
+        type: 'POST',
+        contentType:'json',
+        data: {location: loc},
+        success: function(data) { console.log( data ) },
+        error: function(data) { console.log( 'error occurred - ' + data ) }
+      });
+  }
+}
+
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
