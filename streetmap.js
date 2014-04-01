@@ -21,17 +21,18 @@ Array.min = function( array ){
   return Math.min.apply( Math, array );
 };
 
-
-
-
 function initialize() {
   var mapOptions = {
     center: new google.maps.LatLng(37.78370618798191,-122.408766746521),
-    zoom: 14
+    zoom: 14,
+    styles: [{
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [ { visibility: "off" } ]
+    }]
   };
 
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
 
   userPoly = new google.maps.Polygon({
     strokeColor: '#FF0000',
@@ -41,13 +42,12 @@ function initialize() {
     fillOpacity: 0.35,
     editable: true
   });
+
   userPoly.setMap(map);
   userPoly.setPaths(path);
-
-
-
   google.maps.event.addListener(map, 'click', addLatLng);
 }
+
 function addLatLng(event) {
   path.push(event.latLng);
   userPoly.setPaths(path);
@@ -57,6 +57,7 @@ function addLatLng(event) {
     testLing.push(myArray[i].A);
   }
 }
+
 function getCorners(){
   if (seCorner){
     seCorner.setMap(null);
@@ -70,28 +71,24 @@ function getCorners(){
     title: 'seCorner',
     map: map
   });
-  console.log('seCorner', Array.min(testLat),Array.max(testLing));
 
   neCorner = new google.maps.Marker({
     position: new google.maps.LatLng(Array.max(testLat),Array.max(testLing)),
     title: 'neCorner',
     map: map
   });
-  console.log('neCorner', Array.max(testLat),Array.max(testLing));
 
   nwCorner = new google.maps.Marker({
     position: new google.maps.LatLng(Array.max(testLat),Array.min(testLing)),
     title: 'nwCorner',
     map: map
   });
-  console.log('nwCorner', Array.max(testLat),Array.min(testLing));
 
   swCorner = new google.maps.Marker({
     position: new google.maps.LatLng(Array.min(testLat),Array.min(testLing)),
     title: 'swCorner',
     map: map
   });
-  console.log('swCroner', Array.min(testLat),Array.min(testLing));
 }
 
 
@@ -101,14 +98,14 @@ function applyGrid(){
   var lat = Array.min(testLat);
   while(lat < Array.max(testLat)){
     height.push(lat);
-    lat += 0.0005;
+    lat += 0.0003;
   }
 
   var width = [];
   var lng = Array.min(testLing);
   while(lng < Array.max(testLing)){
     width.push(lng);
-    lng += 0.0005;
+    lng += 0.0003;
   }
 
   for (var h =0; h < height.length; h++){
@@ -120,11 +117,13 @@ function applyGrid(){
     }
   }
 }
+
 function twoFer(){
+  streets = [];
   getCorners();
   applyGrid();
-};
-  
+}
+
 function reverse(){
   for (var i=0; i<gridCoord.length; i++){
     var loc = gridCoord[i];
@@ -141,24 +140,28 @@ function reverse(){
 }
 
 function streetSplit(arr){
+  mem = {};
   for (var i = 0; i < arr.length; i++){
     var stArr = arr[i].split(' ');
     var streetNum = stArr.slice(0,1);
-    console.log(stArr, stArr.length);
     if (stArr.length > 2){
-      var streetName = stArr.slice(1).join(' ');
+      streetName = stArr.slice(1).join(' ');
+    } else if(stArr.length === 2){
+      streetName = arr[i];
     }
     if (streetName in mem){
-      console.log('we been here before ', streetName);
       mem[streetName].push(parseInt(streetNum));
     } else {
-      console.log('whoa ', streetName);
       mem[streetName] = [];
-      mem[streetName].push(parseInt(streetNum));      
+      mem[streetName].push(parseInt(streetNum));
     }
   }
+  for (var i in mem){
+    var min = Array.min(mem[i]);
+    var max = Array.max(mem[i]);
+    mem[i]=[min, max]
+  }
+  console.log(mem);
 }
-
-
 
 google.maps.event.addDomListener(window, 'load', initialize);
