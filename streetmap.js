@@ -1,6 +1,6 @@
 
 var map;
-var myPoly;
+var userPoly;
 var path = [];
 var gridCoord = [];
 var streets = [];
@@ -33,7 +33,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 
-  myPoly = new google.maps.Polygon({
+  userPoly = new google.maps.Polygon({
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
     strokeWeight: 3,
@@ -41,8 +41,8 @@ function initialize() {
     fillOpacity: 0.35,
     editable: true
   });
-  myPoly.setMap(map);
-  myPoly.setPaths(path);
+  userPoly.setMap(map);
+  userPoly.setPaths(path);
 
 
 
@@ -50,8 +50,8 @@ function initialize() {
 }
 function addLatLng(event) {
   path.push(event.latLng);
-  myPoly.setPaths(path);
-  var myArray = myPoly.getPaths().getArray()[0].j;
+  userPoly.setPaths(path);
+  var myArray = userPoly.getPaths().getArray()[0].j;
   for (var i = 0; i < myArray.length; i++){
     testLat.push(myArray[i].k);
     testLing.push(myArray[i].A);
@@ -114,16 +114,18 @@ function applyGrid(){
   for (var h =0; h < height.length; h++){
     for (var w=0; w< width.length; w++){
       var coord = new google.maps.LatLng(height[h],width[w]);
-      if (google.maps.geometry.poly.containsLocation(coord, myPoly)){
+      if (google.maps.geometry.poly.containsLocation(coord, userPoly)){
         gridCoord.push(height[h].toString() + ',' + width[w].toString());
       }
     }
   }
 }
-
-function reverse(){
+function twoFer(){
   getCorners();
   applyGrid();
+};
+  
+function reverse(){
   for (var i=0; i<gridCoord.length; i++){
     var loc = gridCoord[i];
     $.ajax({
