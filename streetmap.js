@@ -141,6 +141,7 @@ function reverse(){
 function streetSplit(arr){
   for (var i = 0; i < arr.length; i++){
     var streetName = arr[i].match(/([A-Z])\w+/g);
+    if (streetName.length===[2]){ streetName = streetName.join(' '); }
     if (streetName in mem){
       console.log('we been here before ', streetName);
       mem[streetName].push(arr[i].match(/([0-9])\w+([^th])\W/g));
