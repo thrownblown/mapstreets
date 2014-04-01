@@ -7,8 +7,12 @@ var streets = [];
 var testLat = [];
 var testLing = [];
 var mem = {};
+var seCorner;
+var neCorner;
+var swCorner;
+var nwCorner;
 
-//moding our big A Array to provide easy min/max methods
+//extending our big A Array to provide easy min/max methods
 Array.max = function( array ){
   return Math.max.apply( Math, array );
 };
@@ -17,10 +21,6 @@ Array.min = function( array ){
   return Math.min.apply( Math, array );
 };
 
-var seCorner;
-var neCorner;
-var swCorner;
-var nwCorner;
 
 
 
@@ -140,17 +140,19 @@ function reverse(){
 
 function streetSplit(arr){
   for (var i = 0; i < arr.length; i++){
-    var streetName = arr[i].match(/([A-Z])\w+/g);
-    if (streetName.length===[2]){ streetName = streetName.join(' '); }
+    var stArr = arr[i].split(' ');
+    var streetNum = stArr.slice(0,1);
+    console.log(stArr, stArr.length);
+    if (stArr.length > 2){
+      var streetName = stArr.slice(1).join(' ');
+    }
     if (streetName in mem){
       console.log('we been here before ', streetName);
-      mem[streetName].push(arr[i].match(/([0-9])\w+([^th])\W/g));
+      mem[streetName].push(parseInt(streetNum));
     } else {
       console.log('whoa ', streetName);
       mem[streetName] = [];
-      var addy = arr[i].match(/([0-9])\w+([^th])\W/g);
-      console.log('addy is ',addy);
-      if (addy){ mem[streetName].join(addy); }
+      mem[streetName].push(parseInt(streetNum));      
     }
   }
 }
