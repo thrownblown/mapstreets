@@ -3,8 +3,11 @@ var map;
 var myPoly;
 var path = [];
 var gridCoord = [];
+var streets = [];
 var testLat = [];
 var testLing = [];
+var mem = {};
+
 //moding our big A Array to provide easy min/max methods
 Array.max = function( array ){
   return Math.max.apply( Math, array );
@@ -19,10 +22,11 @@ var neCorner;
 var swCorner;
 var nwCorner;
 
+
+
 function initialize() {
   var mapOptions = {
     center: new google.maps.LatLng(37.78370618798191,-122.408766746521),
-    // center: new google.maps.LatLng(37.7107,-122.4376),
     zoom: 14
   };
 
@@ -47,10 +51,7 @@ function initialize() {
 function addLatLng(event) {
   path.push(event.latLng);
   myPoly.setPaths(path);
-  console.log(myPoly.getPaths().getArray());
-
   var myArray = myPoly.getPaths().getArray()[0].j;
-  console.log(myArray);
   for (var i = 0; i < myArray.length; i++){
     testLat.push(myArray[i].k);
     testLing.push(myArray[i].A);
@@ -118,10 +119,11 @@ function applyGrid(){
       }
     }
   }
-  console.log(gridCoord);
 }
 
 function reverse(){
+  getCorners();
+  applyGrid();
   for (var i=0; i<gridCoord.length; i++){
     var loc = gridCoord[i];
     $.ajax({
@@ -130,9 +132,25 @@ function reverse(){
         type: 'POST',
         contentType:'json',
         data: {location: loc},
-        success: function(data) { console.log( data ) },
-        error: function(data) { console.log( 'error occurred - ' + data ) }
+        success: function(data) {streets.push(data.results[0].locations[0].street);},
+        error: function(data) {console.log('error occurred - ' + data);}
       });
+  }
+}
+
+function streetSplit(arr){
+  for (var i = 0; i < arr.length; i++){
+    var streetName = arr[i].match(/([A-Z])\w+/g);
+    if (streetName in mem){
+      console.log('we been here before ', streetName);
+      mem[streetName].push(arr[i].match(/([0-9])\w+([^th])\W/g));
+    } else {
+      console.log('whoa ', streetName);
+      mem[streetName] = [];
+      var addy = arr[i].match(/([0-9])\w+([^th])\W/g);
+      console.log('addy is ',addy);
+      if (addy){ mem[streetName].join(addy); }
+    }
   }
 }
 
