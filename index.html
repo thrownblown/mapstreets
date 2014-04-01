@@ -11,29 +11,16 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
+      #map-canvas { height: 1000px; width: 1000px }
     </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx99_E2zELB3TFtYmvdGQQg6u_WggScZs&sensor=true">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(37.7187,-122.4376),
-          zoom: 19
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-  </head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
-    >
-    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx99_E2zELB3TFtYmvdGQQg6u_WggScZs&sensor=true"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="./streetmap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
-    >
-    </script>
+    ></script>
+  </head>
+  <body>
     <nav class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Mapulator</a>
@@ -44,10 +31,13 @@
             <a href="#">Home</a>
           </li>
           <li>
-            <a href="#">Link</a>
+            <a href="#" class="showCorners" onclick="twoFer()">apply grid</a>
           </li>
           <li>
-            <a href="#">Link</a>
+            <a href="#" class"applyGrid" onclick="reverse()">reverse geocode</a>
+          </li>
+          <li>
+            <a href="#" class"applyGrid" onclick="streetSplit(streets)">split streets</a>
           </li>
         </ul>
       </div>

@@ -1,4 +1,4 @@
-
+var app = angular.module('mapulator', [])
 var map;
 var userPoly;
 var path = [];
@@ -11,6 +11,7 @@ var seCorner;
 var neCorner;
 var swCorner;
 var nwCorner;
+var streetName;
 
 //extending our big A Array to provide easy min/max methods
 Array.max = function( array ){
@@ -164,4 +165,37 @@ function streetSplit(arr){
   console.log(mem);
 }
 
+app.service('revGeo', ['$http', '$q', function($http, $q) {
+  this.mapQuest = function(){
+    for (var i=0; i<gridCoord.length; i++){
+      return $http({
+        url: 'http://www.mapquestapi.com/geocoding/v1/reverse?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56',
+        dataType: 'jsonp',
+        method: 'POST',
+        contentType:'json',
+        data: {location: loc}
+      })
+      .then(function(data) {
+        streets.push(data.results[0].locations[0].street);
+      })
+    };
+  }
+}]);
+
+app.controller('streetCtrl', function($scope, $http, revGeo){
+  $scope.streetMinMax = function(){
+    streetSplit(streets);
+    console.log('clicked!!');
+    $scope.memMinMax=mem;
+    $scope.showMinMax = true;
+  };
+
+  $scope.fetch = function(){
+    revGeo.mapQuest()
+    .then(function(data) {
+      console.log(data);
+      $scope.streetData = data;
+    });
+  };
+});
 google.maps.event.addDomListener(window, 'load', initialize);
