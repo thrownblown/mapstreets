@@ -165,6 +165,7 @@ function streetSplit(arr){
     var min = Array.min(mem[i]);
     var max = Array.max(mem[i]);
     mem[i]=[min, max]
+    $('#streets ul').append('<li>' + i + ' min ' + mem[i][0] + ' max ' + mem[i][1] + '</li>');
   }
   console.log(mem);
 }
