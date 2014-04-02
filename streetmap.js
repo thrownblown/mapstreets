@@ -150,7 +150,7 @@ function streetSplit(arr){
     if (stArr.length > 2){
       streetName = stArr.slice(1).join(' ');
     } else if(stArr.length === 2){
-      if (strArr[2]==='Broadway'){
+      if (stArr[2]==='Broadway'){
         streetName = 'Broadway'
       }else{
         streetName = arr[i];
@@ -306,6 +306,9 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
       if (stArr.length > 2){
         streetName = stArr.slice(1).join(' ');
       } else if(stArr.length === 2){
+        if (stArr[2]==='Broadway'){
+        streetName = 'Broadway'
+      } else {
         streetName = arr[i];
       }
       if (streetName in mem){
