@@ -123,6 +123,8 @@ function twoFer(){
   streets = [];
   getCorners();
   applyGrid();
+  setTimeout(reverse(), 2000);
+  setTimeout(streetSplit(streets), 2000);
 }
 
 function reverse(){
@@ -148,7 +150,11 @@ function streetSplit(arr){
     if (stArr.length > 2){
       streetName = stArr.slice(1).join(' ');
     } else if(stArr.length === 2){
-      streetName = arr[i];
+      if (strArr[2]==='Broadway'){
+        streetName = 'Broadway'
+      }else{
+        streetName = arr[i];
+      }
     }
     if (streetName in mem){
       mem[streetName].push(parseInt(streetNum));
@@ -166,6 +172,7 @@ function streetSplit(arr){
 }
 
 app.service('revGeo', ['$http', '$q', function($http, $q) {
+  console.log('revGeo')
   this.mapQuest = function(){
     for (var i=0; i<gridCoord.length; i++){
       return $http({
@@ -184,6 +191,9 @@ app.service('revGeo', ['$http', '$q', function($http, $q) {
 
 app.controller('streetCtrl', function($scope, $http, revGeo){
   $scope.streetMinMax = function(){
+
+    console.log('strreetMinMax')
+
     streetSplit(streets);
     console.log('clicked!!');
     $scope.memMinMax=mem;
@@ -191,6 +201,9 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
   };
 
   $scope.fetch = function(){
+    
+    console.log('fetch')
+
     revGeo.mapQuest()
     .then(function(data) {
       console.log(data);
@@ -199,6 +212,9 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
   };
 
   $scope.findCorners = function(){
+    
+    console.log('findCorners')
+
     if (seCorner){
       seCorner.setMap(null);
       neCorner.setMap(null);
@@ -234,6 +250,8 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
 
   $scope.gridPoly = function (){
 
+    console.log('gridPoly')
+
     var height = [];
     var lat = Array.min(testLat);
     while(lat < Array.max(testLat)){
@@ -260,6 +278,9 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
   
 
   $scope.postLatLng = function(){
+
+    console.log('postLatLng')
+
     for (var i=0; i<gridCoord.length; i++){
       var loc = gridCoord[i];
       $.ajax({
@@ -275,6 +296,9 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
   }
 
   $scope.splitMem = function(arr){
+
+    console.log('splitMem')
+
     mem = {};
     for (var i = 0; i < arr.length; i++){
       var stArr = arr[i].split(' ');
