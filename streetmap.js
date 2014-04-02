@@ -123,8 +123,6 @@ function twoFer(){
   streets = [];
   getCorners();
   applyGrid();
-  setTimeout(reverse(), 2000);
-  setTimeout(streetSplit(streets), 2000);
 }
 
 function reverse(){
@@ -306,9 +304,6 @@ app.controller('streetCtrl', function($scope, $http, revGeo){
       if (stArr.length > 2){
         streetName = stArr.slice(1).join(' ');
       } else if(stArr.length === 2){
-        if (stArr[2]==='Broadway'){
-        streetName = 'Broadway'
-      } else {
         streetName = arr[i];
       }
       if (streetName in mem){
