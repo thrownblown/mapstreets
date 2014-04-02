@@ -142,13 +142,14 @@ function reverse(){
 
 function streetSplit(arr){
   mem = {};
+  $('#streets li').remove();
   for (var i = 0; i < arr.length; i++){
     var stArr = arr[i].split(' ');
     var streetNum = stArr.slice(0,1);
     if (stArr.length > 2){
       streetName = stArr.slice(1).join(' ');
     } else if(stArr.length === 2){
-      if (stArr[2]==='Broadway'){
+      if (stArr[1]==='Broadway'){
         streetName = 'Broadway'
       }else{
         streetName = arr[i];
