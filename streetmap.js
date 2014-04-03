@@ -98,14 +98,14 @@ function applyGrid(){
   var lat = Array.min(testLat);
   while(lat < Array.max(testLat)){
     height.push(lat);
-    lat += 0.0003;
+    lat += 0.0005;
   }
 
   var width = [];
   var lng = Array.min(testLing);
   while(lng < Array.max(testLing)){
     width.push(lng);
-    lng += 0.0003;
+    lng += 0.0005;
   }
 
   for (var h =0; h < height.length; h++){
@@ -167,7 +167,7 @@ function streetSplit(arr){
     var min = Array.min(mem[i]);
     var max = Array.max(mem[i]);
     mem[i]=[min, max]
-    $('#streets ul').append('<li>' + i + ' min ' + mem[i][0] + ' max ' + mem[i][1] + '</li>');
+    $('#streets ul').append('<li>' + i + '<strong> Min: </strong>' + mem[i][0] + '<strong> Max: </strong>' + mem[i][1] + '</li>');
   }
 }
 
