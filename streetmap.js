@@ -166,15 +166,44 @@ function streetSplit(arr){
       }
     }
   }
+  var keys = [];
   for (var i in mem){
+    keys.push(i);
+    keys.sort();
     var min = Array.min(mem[i]);
     var max = Array.max(mem[i]);
     mem[i]=[min, max]
+  }
+  var len = keys.length;
+  for (i = 0; i < len; i++){
     $('#streets table')
-      .append('<tr><td width=150>' + i + '</td><td><strong> Min: </strong>' + mem[i][0] + '</td><td><strong> Max: </strong>' + mem[i][1] + '</td></tr>');
+      .append('<tr><td width=150>' + keys[i] + '</td><td><strong> Min: </strong>' + mem[keys[i]][0] + '</td><td><strong> Max: </strong>' + mem[keys[i]][1] + '</td></tr>');
   }
 }
+// var myObj =
+//     {
+//         'b': 'asdsadfd',
+//         'c': 'masdasaf',
+//         'a': 'dsfdsfsdf'
+//     },
+//     k, i, len;
 
+// for (k in myObj)
+// {
+//     if (myObj.hasOwnProperty(k))
+//     {
+//     }
+// }
+
+// keys.sort();
+
+// len = keys.length;
+
+// for (i = 0; i < len; i++)
+// {
+//     k = keys[i];
+//     alert(k + ':' + myObj[k]);
+// }
 
 function twoFer(){
   streets = [];
