@@ -53,7 +53,7 @@ angular.extend($scope, {
         options: {
             attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
         }
-    }
+    },
     tiles: tilesDict.opencyclemap,
     defaults: {
             scrollWheelZoom: false

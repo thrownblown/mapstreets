@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
@@ -13,20 +13,22 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { 
         vertical-align: 
-        top; height: 1000px; 
-        width: 1000px 
+        top; 
+        height: 1000px; 
+        width: 1200px 
       }
       #map-td { vertical-align: top; width: 1000px }
       #map-st { vertical-align: top; width: 300px }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
     <script type="text/javascript" src="./streetmap.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
     ></script>
   </head>
   <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Mapulator</a>
       </div>
@@ -36,27 +38,26 @@
             <a href="#">Home</a>
           </li>
           <li>
-            <a href="#" class="showCorners" onclick="twoFer()">apply grid</a>
+            <a href="#" class="grid" onclick="twoFer()">Show Streets</a>
           </li>
-          <li>
-            <a href="#" class"applyGrid" onclick="reverse()">reverse geocode</a>
-          </li>
+         
         </ul>
       </div>
     </nav>
-    <div class="container">
-    <table width=1400>
+    <div class="container" style="float: left;" align="left">
+    <table width=1500>
       <tr>
-        <td id="map-td">
-          <div id="map-canvas"/>
+        <td id="map-td" style="text-align:left;">
+          <div id="map-canvas" style="float: left;" align="left"/>
         </td>
         <td id="map-st">
         <div id="streets">
-          <ul></ul>
+          <table></table>
         </div>
         </td>
       </tr>
     </table>
+      Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.
     </div>
   </body>
 </html>

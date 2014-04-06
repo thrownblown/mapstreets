@@ -22,9 +22,14 @@ Array.min = function( array ){
 };
 
 function initialize() {
+  var layer = "toner";
   var mapOptions = {
-    center: new google.maps.LatLng(37.78370618798191,-122.408766746521),
+    center: new google.maps.LatLng(37.77870618798191,-122.428766746521),
     zoom: 14,
+    mapTypeId: layer,
+    mapTypeControlOptions: {
+        mapTypeIds: [layer]
+    },
     styles: [{
       featureType: "poi",
       elementType: "labels",
@@ -34,13 +39,15 @@ function initialize() {
 
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+  map.mapTypes.set(layer, new google.maps.StamenMapType(layer));
+
   userPoly = new google.maps.Polygon({
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
     strokeWeight: 3,
     fillColor: '#FF0000',
     fillOpacity: 0.35,
-    editable: true
+    editable: false
   });
 
   userPoly.setMap(map);
@@ -118,13 +125,7 @@ function applyGrid(){
   }
 }
 
-function twoFer(){
-  streets = [];
-  getCorners();
-  applyGrid();
-}
-
-function reverse(){
+function reverseGeo(){
   for (var i=0; i<gridCoord.length; i++){
     var loc = gridCoord[i];
     $.ajax({
@@ -143,10 +144,10 @@ function reverse(){
 
 function streetSplit(arr){
   mem = {};
-  $('#streets li').remove();
+  $('#streets tr').remove();
   for (var i = 0; i < arr.length; i++){
     var stArr = arr[i].split(' ');
-    var streetNum = stArr.slice(0,1);
+    var streetNum = parseFloat(stArr.slice(0,1));
     if (stArr.length > 2){
       streetName = stArr.slice(1).join(' ');
     } else if(stArr.length === 2){
@@ -156,20 +157,32 @@ function streetSplit(arr){
         streetName = arr[i];
       }
     }
-    if (streetName in mem){
-      mem[streetName].push(parseInt(streetNum));
-    } else {
-      mem[streetName] = [];
-      mem[streetName].push(parseInt(streetNum));
+    if (streetNum){
+      if (streetName in mem){
+        mem[streetName].push(streetNum);
+      } else {
+        mem[streetName] = [];
+        mem[streetName].push(streetNum);
+      }
     }
   }
   for (var i in mem){
     var min = Array.min(mem[i]);
     var max = Array.max(mem[i]);
     mem[i]=[min, max]
-    $('#streets ul').append('<li>' + i + '<strong> Min: </strong>' + mem[i][0] + '<strong> Max: </strong>' + mem[i][1] + '</li>');
+    $('#streets table')
+      .append('<tr><td width=150>' + i + '</td><td><strong> Min: </strong>' + mem[i][0] + '</td><td><strong> Max: </strong>' + mem[i][1] + '</td></tr>');
   }
 }
 
+
+function twoFer(){
+  streets = [];
+  getCorners();
+  applyGrid();
+  reverseGeo();
+  $('.grid').remove();
+  $('ul').append('<li><a href="#" class"applyGrid" onclick="streetSplit(streets);">Show Streets</a></li>');
+}
 
 google.maps.event.addDomListener(window, 'load', initialize);
