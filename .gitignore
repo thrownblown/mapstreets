@@ -2,3 +2,4 @@
 ./myCert.cer 
 ./myCert.pem 
 ./myPrivateKey.key 
+./bower_components/**
