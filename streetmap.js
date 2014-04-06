@@ -136,7 +136,7 @@ function reverseGeo(){
         data: {location: loc},
         success: function(data) {
           streets.push(data.results[0].locations[0].street);
-          streetSplit(streets);
+          if (streets.length>(gridCoord.length-100)){streetSplit(streets)};
         }
       });
   }
@@ -177,7 +177,7 @@ function streetSplit(arr){
   var len = keys.length;
   for (i = 0; i < len; i++){
     $('#streets table')
-      .append('<tr><td width=150>' + keys[i] + '</td><td><strong> Min: </strong>' + mem[keys[i]][0] + '</td><td><strong> Max: </strong>' + mem[keys[i]][1] + '</td></tr>');
+      .append('<tr><td width=130>' + keys[i] + '</td><td><strong> Min: </strong>' + mem[keys[i]][0] + '</td><td><strong> Max: </strong>' + mem[keys[i]][1] + '</td></tr>');
   }
 }
 // var myObj =
