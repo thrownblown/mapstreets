@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="mapapp">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+    </style>
+
+    <script type="text/javascript" src="bower_components/tabletop/src/tabletop.js"></script>
+
+   
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src='bower_components/underscore/underscore-min.js'></script>
+    <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
+    <script type="text/javascript" src="bower_components/angular-leaflet/dist/angular-leaflet-directive.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMk9UfSIhH4R_X3ffpiQKSZUOGRMsXhlk&sensor=false"></script>
+    <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
+    <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-routing.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
+    <script type="text/javascript" src="./app.js"></script>
+  </head>
+  <body ng-controller="mapctrl">
+    <h1>RealTimeRouter</h1>
+    <form>
+        Latitude : <input type="number" step="any" ng-model="sf.lat" />
+        Longitude : <input type="number" step="any" ng-model="sf.lng" />
+        Zoom : <input type="number" step="any" ng-model="sf.zoom" />
+    </form>
+    <div ng-controller="eventcrtl">
+    <leaflet center="sf" width="1000" tiles="tiles" height="1000" event-broadcast="events"></leaflet>
+      <button ng-click="changeTiles('opencyclemap')" class="btn btn-default">OpenCycleMaps</button>
+      <button ng-click="changeTiles('openstreetmap')" class="btn btn-default">OpenStreetMaps</button>
+    </div>
+    <ul>
+    <li><strong ng-bind="eventDetected"></strong> caught in listener.</li>
+    </ul>
+Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.
+    </div>
+  </body>
+</html>
+
