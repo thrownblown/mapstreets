@@ -126,7 +126,8 @@ function applyGrid(){
 }
 
 function reverseGeo(){
-  for (var i=0; i<gridCoord.length; i++){
+  var gridLen = gridCoord.length;
+  for (var i=0; i<gridLen; i++){
     var loc = gridCoord[i];
     $.ajax({
         url: 'http://www.mapquestapi.com/geocoding/v1/reverse?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56',
@@ -136,7 +137,11 @@ function reverseGeo(){
         data: {location: loc},
         success: function(data) {
           streets.push(data.results[0].locations[0].street);
-          if (streets.length>(gridCoord.length-100)){streetSplit(streets)};
+          if ((streets.length%50)===0){streetSplit(streets)};
+          if (streets.length===gridLen){
+            streetSplit(streets);
+            $('#streets').prepend('<h2>COMPLETE</h2>')
+          };
         }
       });
   }
@@ -180,30 +185,6 @@ function streetSplit(arr){
       .append('<tr><td width=130>' + keys[i] + '</td><td><strong> Min: </strong>' + mem[keys[i]][0] + '</td><td><strong> Max: </strong>' + mem[keys[i]][1] + '</td></tr>');
   }
 }
-// var myObj =
-//     {
-//         'b': 'asdsadfd',
-//         'c': 'masdasaf',
-//         'a': 'dsfdsfsdf'
-//     },
-//     k, i, len;
-
-// for (k in myObj)
-// {
-//     if (myObj.hasOwnProperty(k))
-//     {
-//     }
-// }
-
-// keys.sort();
-
-// len = keys.length;
-
-// for (i = 0; i < len; i++)
-// {
-//     k = keys[i];
-//     alert(k + ':' + myObj[k]);
-// }
 
 function twoFer(){
   streets = [];
