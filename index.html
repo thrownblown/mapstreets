@@ -17,15 +17,14 @@
         height: 1000px; 
         width: 1200px 
       }
-      #map-td { vertical-align: top; width: 1200px }
+      #map-td { vertical-align: top; width: 1200px; background-image: url('013.jpg'); background-size: 100% }
       #map-st { vertical-align: top; width: 330px; padding-left:10px }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
     <script type="text/javascript" src="./streetmap.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
-    ></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-inverse" role="navigation">
@@ -53,16 +52,21 @@
         <td id="map-st">
         <div id="streets">
           <a href="#" class="grid" onclick="twoFer()"><h3>Show Streets</h3></a>
+          <input class="grid" type="text" placeholder="Recenter on your city" id="city"/> 
+          <input class="grid" type="text" max = 2 size = 2 placeholder="ST" id="state"/> 
+          <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/> 
+          <br/>
+          <a href="#" class="grid" onclick="twoFer()"><h4>Recenter Map</h4></a>
           <ul class="grid"><em>
           <li><h4>Instructions for use:</h4></li>
           <li>Draw a polygon that represents your client's delivery zone by clicking at least three times on the map to the right.</li>
           <li>Cick the "Show Streets" link above to return all of the streets inside the zone and the range of valid addresses.</li>
           <li>It takes approx 30-40 seconds to run and it will notify you when its complete.</li>
-          </em>
+          </em><br/><br/>
           <li><h4>Frequently Asked Questions:</h4></li>
-
-          <li><b>Q</b>: Some streets aren't listed right, and some of the addresses aren't right. This is gonna confuse people, What the fuck?</li> 
-          <li><b>A</b>:  This was designed to help you make the street guides for your clients' zones, its not intended to replace those. Take the information that Mapulator provides you and turn that into a street guide, making apropos interpretations like changing a street name from its official designation (CA Highway 101) to its colloquial name (Van Ness Ave). I would suggest cutting and pasting the streets into the text editor of your choice.</li>
+          <li><b>Q</b>: Some streets aren't listed right, and some of the addresses aren't right. This is gonna confuse people! What the fuck?</li> 
+          <li><b>A</b>:  This was designed to help you make the street guides for your clients' zones, its not intended to replace those. Take the information that Mapulator provides you and turn that into a street guide, making apropos interpretations like changing a street name from its official designation (CA Highway 101) to its colloquial name (Van Ness Ave). I would suggest cutting and pasting the streets into the text editor of your choice.</li><br/>
+          <li><b>Q</b>: Can we make this into a tool for the customer / embed this in our site?</li>
           <li><b>A</b>: No. That's not the purpose of the Mapulator. <a href="http://www.twinjet.co">Twin Jet</a> will have a similar functionality built in. For the meantime you could print out Mapulator and rubber-cement it all together zine style (remember zines...?)</li><br/>
           <li><b>Q</b>: Once a polygon has been made, can we allow for fine tuning like in Google maps? Adding points and dragging them around to really dial in the zone?</li>
           <li><b>A</b>: This is already in Google Maps. <strike>Its on the list to enable editing of the polygon, but its a couple days away</strike>. You can edit the polygon now.</li><br/>
