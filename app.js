@@ -1,5 +1,5 @@
 var app = angular.module("mapulator", ["leaflet-directive"]);
-function mapctrl($scope) {
+app.controller("mapctrl", ["$scope", function($scope) {
   var tilesDict = {
     openstreetmap: {
       url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -47,7 +47,7 @@ function mapctrl($scope) {
         }
       },
     });
-};
+}]);
 
 app.controller("eventcrtl", [ '$scope', function($scope) {
     $scope.$on('leafletDirectiveMap.click', function(event, args){
