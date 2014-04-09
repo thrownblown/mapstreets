@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html ng-app="mapapp">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +17,11 @@
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src='bower_components/underscore/underscore-min.js'></script>
     <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
     <script type="text/javascript" src="bower_components/angular-leaflet/dist/angular-leaflet-directive.min.js"></script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMk9UfSIhH4R_X3ffpiQKSZUOGRMsXhlk&sensor=false"></script>
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-routing.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
-    <script type="text/javascript" src="./app.js"></script>
   </head>
   <body ng-controller="mapctrl">
     <h1>RealTimeRouter</h1>
@@ -34,14 +32,59 @@
     </form>
     <div ng-controller="eventcrtl">
     <leaflet center="sf" width="1000" tiles="tiles" height="1000" event-broadcast="events"></leaflet>
-      <button ng-click="changeTiles('opencyclemap')" class="btn btn-default">OpenCycleMaps</button>
-      <button ng-click="changeTiles('openstreetmap')" class="btn btn-default">OpenStreetMaps</button>
-    </div>
-    <ul>
-    <li><strong ng-bind="eventDetected"></strong> caught in listener.</li>
-    </ul>
+     <!--  <button ng-click="changeTiles('opencyclemap')" class="btn btn-default">OpenCycleMaps</button>
+      <button ng-click="changeTiles('openstreetmap')" class="btn btn-default">OpenStreetMaps</button> -->
+<!--     </div>
 Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.
     </div>
   </body>
-</html>
+</html> -->
+<!DOCTYPE html>
+<html ng-app="mapulator">
+  <head>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/leaflet-dist/leaflet.js"></script>
+    <script src="./bower_components/angular-leaflet/dist/angular-leaflet-directive.min.js"></script>
+    <link rel="stylesheet" href="./bower_components/leaflet-dist/leaflet.css" />
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
+    <script type="text/javascript" src="./app.js"></script>
 
+    <style>
+        .angular-leaflet-map {
+            width: 1500px;
+            height: 1400px;
+        }
+    </style>
+  </head>
+  <body>
+  <div class="container">
+      <div ng-controller="mapctrl">
+
+          <div class="row">
+              <h1>MAPULATOR</h1>
+          </div>
+
+
+          <div class="row">
+              <p>Current TileLayer Url: {{ tiles.url }}</p>
+          </div>
+
+          <div class="row" ng-controller="eventcrtl">
+            <leaflet center="sf" tiles="tiles" defaults="defaults"></leaflet>
+          </div>
+          <div class="row">
+              <p>
+              <button ng-click="changeTiles('opencyclemap')" class="btn btn-default">OpenCycleMaps</button>
+              <button ng-click="changeTiles('openstreetmap')" class="btn btn-default">OpenStreetMaps</button>
+              <button ng-click="changeTiles('toner')" class="btn btn-default">Toner</button>
+              </p>
+          </div>
+          <ul>
+          <li><strong ng-bind="eventDetected"></strong> caught in listener.</li>
+          </ul>
+      </div>
+  </div>
+
+  </body>
+</html>
