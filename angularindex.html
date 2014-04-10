@@ -27,7 +27,7 @@
       <div ng-controller="mapctrl">
 
           <div class="row">
-              <h1>MAPULATOR</h1>
+              <h1>MAPULATOR by <i>TCB Courier</i></h1>
           </div>
 
 
@@ -48,6 +48,24 @@
           <div class="row" ng-controller="eventcrtl">
             <leaflet center="sf" tiles="tiles" defaults="defaults" controls="controls" geojson="geojson"></leaflet>
           </div>
+          <ul class="grid"><em>
+              <img src="photo.jpg" style="float: right" width="180" height="180">
+          <li><h3>Instructions for use:</h3></li>
+          <li>Draw a polygon that represents your client's delivery zone by clicking the "pentagon" and then at least three times on the map to the above.</li>
+          <li>Cick the "Show Streets" button above to return all of the streets inside the zone and the range of valid addresses.</li>
+          <li>It takes approx 30-40 seconds to run and it will notify you when its complete.</li>
+          </em><br/>
+          <li><h3>Frequently Asked Questions:</h3></li>
+          <li><b>Q</b>: Some streets aren't listed correctly, and some of the addresses aren't right. This is gonna confuse people! What the fuck?</li> 
+          <li><b>A</b>:  This was designed to help you make the street guides for your clients' zones, its not intended to replace those. Take the information that Mapulator provides you and turn that into a street guide, making apropos interpretations like changing a street name from its official designation (CA Highway 101) to its colloquial name (Van Ness Ave). I would suggest cutting and pasting the streets into the text editor of your choice.</li><br/>
+          <li><b>Q</b>: Can we make this into a tool for the customer / embed this in our site?</li>
+          <li><b>A</b>: No. That's not the purpose of the Mapulator. <a href="http://www.twinjet.co">Twin Jet</a> will have a similar functionality built in. For the meantime you could print out Mapulator and rubber-cement it all together zine style (remember zines...?)</li><br/>
+          <li><b>Q</b>: Once a polygon has been made, can we allow for fine tuning like in Google maps? Adding points and dragging them around to really dial in the zone?</li>
+          <li><b>A</b>: <strike>This is already in Google Maps.</strike> Its on the list to enable editing of the polygon, but its a couple days away. This is fully in Open Street Maps now.</li><br/>
+          <li><b>Q</b>: Will there be the ability to make multiple zones, or the possibility to save and refresh these zone maps?</li>
+          <li><b>A</b>: Yes in <a href="http://www.twinjet.co">TwinJet.co</a></li><br/>
+          </ul>
+
       </div>
   </div>
 
