@@ -2,8 +2,15 @@ var app = angular.module("mapulator", ["leaflet-directive"]);
 app.controller("mapctrl", ["$scope", function($scope) {
   var tilesDict = {
     toner: {
-      name: "Zinester",
+      name: "Toner",
       url: "http://tile.stamen.com/toner/{z}/{x}/{y}.png",
+      options: {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
+      }
+    },
+    terrain: {
+      name: "Terrain",
+      url: "http://tile.stamen.com/terrain/{z}/{x}/{y}.png",
       options: {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
       }
@@ -43,16 +50,22 @@ app.controller("mapctrl", ["$scope", function($scope) {
     },
     controls: {
       draw: { 
-        DrawOptions: {
-          position: "topright",
-          polygon: {
-            shapeOptions: {
-              color: 'red'
-            },
-            allowIntersection: false,
-            drawError: {
-              color: 'orange',
-              timeout: 1000
+        options: {
+          position: "topleft",
+          draw:{
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            marker: false,
+            polygon: {
+              shapeOptions: {
+                color: 'red'
+              },
+              allowIntersection: false,
+              drawError: {
+                color: 'orange',
+                timeout: 1000
+              }
             }
           }
         }
@@ -63,61 +76,6 @@ app.controller("mapctrl", ["$scope", function($scope) {
   $scope.changeTiles = function(tiles) {
       $scope.tiles = tilesDict[tiles];
   };
-
-  // var drawnItems = new L.FeatureGroup();
-  // map.addLayer(drawnItems);
-
-  // var drawControl = new L.Control.Draw({
-  //   position: 'topright',
-  //   draw: {
-  //     polygon: {
-  //       shapeOptions: {
-  //         color: 'purple'
-  //       },
-  //       allowIntersection: false,
-  //       drawError: {
-  //         color: 'orange',
-  //         timeout: 1000
-  //       },
-  //       showArea: true,
-  //       metric: false,
-  //       repeatMode: true
-  //     },
-  //     polyline: {
-  //       shapeOptions: {
-  //         color: 'red'
-  //       },
-  //     },
-  //     rect: {
-  //       shapeOptions: {
-  //         color: 'green'
-  //       },
-  //     },
-  //     circle: {
-  //       shapeOptions: {
-  //         color: 'steelblue'
-  //       },
-  //     },
-  //     marker: {
-  //       icon: greenIcon
-  //     },
-  //   },
-  //   edit: {
-  //     featureGroup: drawnItems
-  //   }
-  // });
-  // map.addControl(drawControl);
-
-  // map.on('draw:created', function (e) {
-  //   var type = e.layerType,
-  //     layer = e.layer;
-
-  //   if (type === 'marker') {
-  //     layer.bindPopup('A popup!');
-  //   }
-
-  //   drawnItems.addLayer(layer);
-  // });
 
 }]);
 
@@ -131,6 +89,30 @@ app.controller("eventcrtl", [ '$scope', "leafletData", function($scope, leafletD
     map.on('draw:created', function (e) {
       var layer = e.layer;
       console.log(JSON.stringify(layer.toGeoJSON()));
+      angular.extend($scope, {
+            geojson: {
+              data: layer.toGeoJSON(),
+              style: {
+                fillColor: "red",
+                weight: 2,
+                opacity: 0.7,
+                color: 'red',
+                dashArray: '3',
+                fillOpacity: 0.3
+              }
+            },
+            edit: {
+              featureGroup: layer,
+              selectedPathOptions: {
+                color: '#fe57a1', /* Hot pink all the things! */
+                opacity: 0.6,
+                dashArray: '10, 10',
+                fill: true,
+                fillColor: '#fe57a1',
+                fillOpacity: 0.1
+              }
+            }
+        });
      });
   });
 

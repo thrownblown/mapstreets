@@ -34,18 +34,19 @@
           <div class="row">
               <h3>Mapset: {{ tiles.name }}</h3>
           </div>
-
-          <div class="row" ng-controller="eventcrtl">
-            <leaflet center="sf" tiles="tiles" defaults="defaults" controls="controls"></leaflet>
-          </div>
           <div class="row">
               <p>
               <br/>
-              <button ng-click="changeTiles('toner')" class="btn btn-default">Zinester</button>
+              <button ng-click="changeTiles('toner')" class="btn btn-default">Toner</button>
+              <button ng-click="changeTiles('terrain')" class="btn btn-default">Terrain</button>
               <button ng-click="changeTiles('opencyclemap')" class="btn btn-default">OpenCycleMaps</button>
               <button ng-click="changeTiles('openstreetmap')" class="btn btn-default">OpenStreetMaps</button>
               <button ng-click="showStreets()" class="btn btn-default" style="float: right">Show Streets</button>
               </p>
+          </div>
+
+          <div class="row" ng-controller="eventcrtl">
+            <leaflet center="sf" tiles="tiles" defaults="defaults" controls="controls" geojson="geojson"></leaflet>
           </div>
       </div>
   </div>
