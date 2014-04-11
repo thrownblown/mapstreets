@@ -27,12 +27,12 @@
       <div ng-controller="mapctrl">
 
           <div class="row">
-              <img src="photo.jpg" style="float: right" vertical-align: text-top width="180" height="180">
+              <img src="photo.jpg" style="float: right" vertical-align: text-top width="180" height="180" padding="0">
               <h1>MAPULATOR</i>
               </h1>
-              <input class="grid" type="text" placeholder="Recenter on your city" id="city"/> 
-              <input class="grid" type="text" max = 2 size = 2 placeholder="ST" id="state"/> 
-              <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/> 
+              <input class="grid" type="text" placeholder="Recenter on your city" id="city"/>
+              <input class="grid" type="text" max = 2 size = 2 placeholder="ST" id="state"/>
+              <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/>
               <br/>
               <button ng-click="recenter()" class="btn btn-default">Recenter Map</button>
               <h3>Mapset: {{ tiles.name }}</h3>
@@ -58,7 +58,7 @@
           <li>It takes approx 30-40 seconds to run and it will notify you when its complete.</li>
           </em><br/>
           <li><h3>Frequently Asked Questions:</h3></li>
-          <li><b>Q</b>: Some streets aren't listed correctly, and some of the addresses aren't right. This is gonna confuse people! What the fuck?</li> 
+          <li><b>Q</b>: Some streets aren't listed correctly, and some of the addresses aren't right. This is gonna confuse people! What the fuck?</li>
           <li><b>A</b>:  This was designed to help you make the street guides for your clients' zones, its not intended to replace those. Take the information that Mapulator provides you and turn that into a street guide, making apropos interpretations like changing a street name from its official designation (CA Highway 101) to its colloquial name (Van Ness Ave). I would suggest cutting and pasting the streets into the text editor of your choice.</li><br/>
           <li><b>Q</b>: Can we make this into a tool for the customer / embed this in our site?</li>
           <li><b>A</b>: No. That's not the purpose of the Mapulator. <a href="http://www.twinjet.co">Twin Jet</a> will have a similar functionality built in. For the meantime you could print out Mapulator and rubber-cement it all together zine style (remember zines...?)</li><br/>
