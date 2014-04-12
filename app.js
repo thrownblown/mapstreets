@@ -38,7 +38,7 @@ app.controller("mapctrl", ["$scope", function($scope) {
     }
   };
 
-var mapLayer = MQ.mapLayer();
+// var mapLayer = MQ.mapLayer();
 
 angular.extend($scope, {
   sf: {
@@ -46,7 +46,7 @@ angular.extend($scope, {
     lng: -122.432766746521,
     zoom: 14,
   },
-  // tiles: tilesDict.toner,
+  tiles: tilesDict.toner,
   events: {
     map: {
       enable: ['click', 'drag'],
@@ -79,16 +79,16 @@ angular.extend($scope, {
         }
       }
     }
-  },
-  layers: {
-    baselayers: {
-      osm: {
-          name: 'OpenStreetMap',
-          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          type: 'xyz'
-        }
-      }
-    }
+  }
+  // layers: {
+  //   baselayers: {
+  //     osm: {
+  //         name: 'OpenStreetMap',
+  //         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  //         type: 'xyz'
+  //       }
+  //     }
+  //   }
   });
 
   $scope.changeTiles = function(tiles) {
