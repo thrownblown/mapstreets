@@ -1,17 +1,15 @@
-// var map;
-var userPoly;
+var map;
+var coordinates;
+var gmap = new google.maps.Map()
+var userPoly = new google.maps.Polygon({paths: coordinates});
 var path = [];
 var gridCoord = [];
 var streets = [];
 var testLat = [];
-var testLing = [];
+var testLng = [];
 var mem = {};
-var seCorner;
-var neCorner;
-var swCorner;
-var nwCorner;
 var streetName;
-var center = [37.76570618798191,-122.428766746521];
+var center = [37.76700618798191,-122.427066746521];
 //extending our big A Array to provide easy min/max methods
 Array.max = function( array ){
   return Math.max.apply( Math, array );
@@ -23,12 +21,34 @@ Array.min = function( array ){
 
 function initialize() {
 
-  var map = L.map('map').setView(center, 14);
+  map = L.map('map', { scrollWheelZoom: false }).setView(center, 14);
   mapLink = '<a href="http://opencyclemap.org">OpenStreetMap</a>';
   L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
     attribution: '&copy; ' + mapLink + ' Contributors',
-    minZoom: 12,
+    minZoom: 10,
   }).addTo(map);
+
+  var mapLayer = MQ.mapLayer();
+  var toner = new L.StamenTileLayer("toner");
+  var terrain = new L.StamenTileLayer("terrain");
+   
+  L.control.layers({
+    'Toner': toner,
+    'Terrain': terrain,
+    'Map': mapLayer,
+    'Hybrid': MQ.hybridLayer()
+  }).addTo(map);
+
+  var geoClick = MQ.geocode().on('success', function(e) {
+    $('#streets strong').remove();
+    var desc = geoClick.describeLocation(e.result.best);
+    $('#streets').prepend('<strong class="grid">' + desc + '</strong>')
+  });
+   
+  map.on('click', function(e) {
+    geoClick.reverse(e.latlng);
+  });
+   
 
   var drawnItems = new L.FeatureGroup();
   map.addLayer(drawnItems);
@@ -66,86 +86,26 @@ function initialize() {
         }
     }
   });
+
   map.addControl(drawControl);
 
   map.on('draw:created', function (e) {
-    var type = e.layerType,
-      layer = e.layer;
+    var type = e.layerType;
+    var layer = e.layer;
     drawnItems.addLayer(layer);
+    coordinates = (layer.toGeoJSON().geometry.coordinates[0]);
+    testBox(coordinates);
   });
 
-  var mapLayer = MQ.mapLayer();
-  var toner = new L.StamenTileLayer("toner");
-  var terrain = new L.StamenTileLayer("terrain");
-   
-  L.control.layers({
-    'Toner': toner,
-    'Terrain': terrain,
-    'Map': mapLayer,
-    'Hybrid': MQ.hybridLayer()
-  }).addTo(map);
-
-  var popup = L.popup();
-  var geocode;
-   
-  map.on('click', function(e) {
-    popup.setLatLng(e.latlng).openOn(this);
-    geocode.reverse(e.latlng);
-  });
-   
-  geocode = MQ.geocode().on('success', function(e) {
-    popup.setContent(geocode.describeLocation(e.result.best));
-  });
 
 }
 
 
-function buildTestArray(){
-  var myArray = userPoly.getPaths().getArray()[0].j;
-  for (var i = 0; i < myArray.length; i++){
-    testLat.push(myArray[i].k);
-    testLing.push(myArray[i].A);
+function testBox(coordinates){
+  for (var i = 0; i < coordinates.length; i++){
+    testLat.push(coordinates[i][1]);
+    testLng.push(coordinates[i][0]);
   }
-}
-
-function getCorners(){
-  buildTestArray();
-  var circle ={
-      path: google.maps.SymbolPath.CIRCLE,
-      fillColor: 'red',
-      fillOpacity: .8,
-      scale: 4,
-      strokeColor: 'black',
-      strokeWeight: 2
-  };
-
-  seCorner = new google.maps.Marker({
-    position: new google.maps.LatLng(Array.min(testLat),Array.max(testLing)),
-    title: 'seCorner',
-    map: map,
-    icon: circle
-  });
-
-  neCorner = new google.maps.Marker({
-    position: new google.maps.LatLng(Array.max(testLat),Array.max(testLing)),
-    title: 'neCorner',
-    map: map,
-    icon: circle
-  });
-
-  nwCorner = new google.maps.Marker({
-    position: new google.maps.LatLng(Array.max(testLat),Array.min(testLing)),
-    title: 'nwCorner',
-    map: map,
-    icon: circle
-  });
-
-  swCorner = new google.maps.Marker({
-    position: new google.maps.LatLng(Array.min(testLat),Array.min(testLing)),
-    title: 'swCorner',
-    map: map,
-    icon: circle
-  });
 }
 
 
@@ -159,8 +119,8 @@ function applyGrid(){
   }
 
   var width = [];
-  var lng = Array.min(testLing);
-  while(lng < Array.max(testLing)){
+  var lng = Array.min(testLng);
+  while(lng < Array.max(testLng)){
     width.push(lng);
     lng += 0.0005;
   }
@@ -238,7 +198,6 @@ function streetSplit(arr){
 
 function twoFer(){
   var streets = [];
-  getCorners();
   applyGrid();
   reverseGeo();
   $('.grid').remove();
@@ -254,11 +213,10 @@ function recenter(){
         dataType: 'jsonp',
         type: 'POST',
         contentType:'json',
-        // data: {location: loc},
         success: function(data) {
           center = data.results[0].locations[0].latLng;
           console.log(center);
-          map.panTo(center);
+          map.setView(center, 14);
         }
       });
 }
