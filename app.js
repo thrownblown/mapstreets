@@ -38,43 +38,54 @@ app.controller("mapctrl", ["$scope", function($scope) {
     }
   };
 
-  angular.extend($scope, {
-    sf: {
-      lat: 37.77070618798191,
-      lng: -122.432766746521,
-      zoom: 14,
-    },
-    tiles: tilesDict.toner,
-    events: {
-      map: {
-        enable: ['click', 'drag'],
-        logic: 'emit',
-      }
-    },
-    defaults: {
-      scrollWheelZoom: false,
-      doubleClickZoom: true
-    },
-    controls: {
-      draw: { 
-        options: {
-          position: "topleft",
-          draw:{
-            polyline: false,
-            rectangle: false,
-            circle: false,
-            marker: false,
-            polygon: {
-              shapeOptions: {
-                color: 'red'
-              },
-              allowIntersection: false,
-              drawError: {
-                color: 'orange',
-                timeout: 1000
-              }
+var mapLayer = MQ.mapLayer();
+
+angular.extend($scope, {
+  sf: {
+    lat: 37.77070618798191,
+    lng: -122.432766746521,
+    zoom: 14,
+  },
+  // tiles: tilesDict.toner,
+  events: {
+    map: {
+      enable: ['click', 'drag'],
+      logic: 'emit',
+    }
+  },
+  defaults: {
+    scrollWheelZoom: false,
+    doubleClickZoom: true
+  },
+  controls: {
+    draw: { 
+      options: {
+        position: "topleft",
+        draw:{
+          polyline: false,
+          rectangle: false,
+          circle: false,
+          marker: false,
+          polygon: {
+            shapeOptions: {
+              color: 'red'
+            },
+            allowIntersection: false,
+            drawError: {
+              color: 'orange',
+              timeout: 1000
             }
           }
+        }
+      }
+    }
+  },
+  layers: {
+    baselayers: {
+      osm: {
+          name: 'OpenStreetMap',
+          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          type: 'xyz'
         }
       }
     }
