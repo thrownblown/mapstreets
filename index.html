@@ -9,20 +9,42 @@
     <link rel="stylesheet" href="./bower_components/leaflet.draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    
+<!--     <link rel="stylesheet" href="style.css"/>
+ -->    
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map { vertical-align: top; height: 1300px; width: 1000px }
-      #map-td { vertical-align: top; width: 1000px; background-image: url('013.jpg'); background-size: 100% }
-      #map-st { vertical-align: top; width: 320px; padding-left:10px }
+      #map { vertical-align: top; height: 1300px; width: 975px }
+      #map-td { vertical-align: top; width: 975px; background-image: url('013.jpg'); background-size: 100% }
+      #map-st { 
+        vertical-align: top; 
+        width: 320px;
+      }
+      #logo{
+        height: 150px;
+        margin-right:10px; 
+        background-image: url('photo.jpg'); 
+        background-repeat: no-repeat;
+        background-position: right top;
+        background-size: 50%;
+        }
+      .leaflet-draw-inner-toolbar { 
+        background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+        bottom: 0;
+        display: none;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
     <script src="./bower_components/leaflet.draw/dist/leaflet.draw.js"></script>
+    <script src="./bower_components/leaflet-pip.min.js"></script>
     <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false" style=""></script>
+<!--     // <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false" style=""></script> -->
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-geocoding.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
   </head>
@@ -50,16 +72,18 @@
         <div id="map"></div>
         </td>
         <td id="map-st">
+        <div id="logo"><strong><br/><br/></strong><br/><br/><br/><br/><br/><br/>
+        </div>
         <div id="streets">
-          <a href="#" class="grid" onclick="twoFer()"><h3>Show Streets</h3></a>
-          <input class="grid" type="text" placeholder="Recenter on your city" id="city"/> 
+          <br class="grid"/>
+          <input class="grid" type="text" placeholder="What's your 20?" id="city"/> 
           <input class="grid" type="text" max = 2 size = 2 placeholder="ST" id="state"/> 
           <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/> 
-          <br/>
-          <a href="#" class="grid" onclick="recenter()"><h4>Recenter Map</h4></a>
+          <br class="grid"/>
+          <button class="grid" onclick="recenter()">Recenter Map</button>
           <ul class="grid"><em>
           <li><h4>Instructions for use:</h4></li>
-          <li>Draw a polygon that represents your client's delivery zone by clicking at least three times on the map to the left.</li>
+          <li>Draw a polygon that represents your client's delivery zone by selecting the pentagon near the zoom controls on the upper left and clicking at least three times on the map to the left.</li>
           <li>Cick the "Show Streets" link above to return all of the streets inside the zone and the range of valid addresses.</li>
           <li>It takes approx 30-40 seconds to run and it will notify you when its complete.</li>
           </em><br/><br/>
@@ -69,7 +93,7 @@
           <li><b>Q</b>: Can we make this into a tool for the customer / embed this in our site?</li>
           <li><b>A</b>: No. That's not the purpose of the Mapulator. <a href="http://www.twinjet.co">Twin Jet</a> will have a similar functionality built in. For the meantime you could print out Mapulator and rubber-cement it all together zine style (remember zines...?)</li><br/>
           <li><b>Q</b>: Once a polygon has been made, can we allow for fine tuning like in Google maps? Adding points and dragging them around to really dial in the zone?</li>
-          <li><b>A</b>: This is already in Google Maps. <strike>Its on the list to enable editing of the polygon, but its a couple days away</strike>. You can edit the polygon now.</li><br/>
+          <li><b>A</b>: I have just ported this completely over to OSM & MapQuest. You can edit the polygon now by clicking on the pencil above the trash can.</li><br/>
           <li><b>Q</b>: Will there be the ability to do multiple zones, or the ability to save and refresh these zone maps?</li>
           <li><b>A</b>: Yes in <a href="http://www.twinjet.co">TwinJet.co</a></li><br/>
           </ul>

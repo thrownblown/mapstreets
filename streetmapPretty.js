@@ -37,9 +37,9 @@ function init() {
   }).addTo(map);
 
   var geoClick = MQ.geocode().on('success', function(e) {
-    $('#logo strong').remove();
+    $('#streets strong').remove();
     var desc = geoClick.describeLocation(e.result.best);
-    $('#logo').prepend('<strong class="grid">' + desc + '</strong>')
+    $('#streets').prepend('<strong class="grid">' + desc + '</strong>')
   });
    
   map.on('click', function(e) {
@@ -65,7 +65,7 @@ function init() {
         },
         showArea: true,
         metric: false,
-        repeatMode: false
+        repeatMode: true
       },
       polyline: false,
       rectangle: false,
@@ -77,9 +77,6 @@ function init() {
   });
 
   map.addControl(drawControl);
-  
-  $('.leaflet-draw-section:first')
-    .append('<div class="leaflet-draw-inner-toolbar" title="Polygon already drawn"></div>');
 
   map.on('draw:created', function (e) {
     var type = e.layerType;
@@ -87,10 +84,6 @@ function init() {
     drawnItems.addLayer(layer);
     geoJsonPoly = (layer.toGeoJSON());
     testBox(geoJsonPoly.geometry.coordinates[0]);
-    $('.leaflet-draw-inner-toolbar').show();
-    $('.grid').remove();
-    $('#streets').prepend('<br class="grid"/><button class="grid" onclick="twoFer()">Show Streets</button><br class="grid"/>');
-
   });
 
   map.on('draw:edited', function (e) {
@@ -101,11 +94,6 @@ function init() {
         testBox(geoJsonPoly.geometry.coordinates[0]);
       }
     });
-  });
-
-  map.on('draw:deleted', function(e) {
-    $('.leaflet-draw-inner-toolbar').hide();
-    geoJsonPoly = {};
   });
 
 }
@@ -166,7 +154,7 @@ function reverseGeo(){
         if ((streets.length%20)===0){streetSplit(streets)};
         if (streets.length===gridLen){
           streetSplit(streets);
-          $('#streets table').prepend('<tr><td><h2>COMPLETE</h2></td></tr>')
+          $('#streets').prepend('<h2>COMPLETE</h2>')
         };
       }
     });
@@ -207,7 +195,6 @@ function streetSplit(arr){
   }
   var len = keys.length;
   for (i = 0; i < len; i++){
-    console.log(mem)
     $('#streets table')
       .append('<tr><td width=130>' + keys[i] + '</td><td><b> Min: </b>' + mem[keys[i]][0] + '</td><td><b> Max: </b>' + mem[keys[i]][1] + '</td></tr>');
   }
@@ -218,6 +205,7 @@ function twoFer(){
   applyGrid();
   reverseGeo();
   $('.grid').remove();
+  $('ul').append('<li><a href="#" class"applyGrid" onclick="streetSplit(streets);">Show Streets</a></li>');
 }
 
 function recenter(){
