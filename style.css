@@ -1,0 +1,31 @@
+html { height: 100% }
+
+body { height: 100%; margin: 0; padding: 0 }
+
+#map { vertical-align: top; height: 1400px; width: 975px }
+
+#map-td { vertical-align: top; width: 975px; background-image: url('013.jpg'); background-size: 100% }
+
+#map-st { 
+  vertical-align: top; 
+  width: 320px;
+}
+
+#logo{
+  height: 180px;
+  margin-right:10px; 
+  background-image: url('photo.jpg'); 
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 60%;
+  }
+
+.leaflet-draw-inner-toolbar { 
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  display: none;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
