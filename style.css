@@ -19,7 +19,7 @@ body { height: 100%; margin: 0; padding: 0 }
   background-position: right top;
   background-size: 60%;
   }
-
+.grid{margin-left: 10px; margin-right: 10px}
 .leaflet-draw-inner-toolbar { 
   background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
   bottom: 0;
