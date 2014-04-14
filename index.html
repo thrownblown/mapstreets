@@ -35,14 +35,15 @@
         </ul>
       </div>
     </nav>
-    <div class="container" style="float: left;" align="left">
+    <div class="container">
     <table width=1285>
       <tr>
-        <td id="map-td" style="text-align:left;">
+        <td id="map-td">
         <div id="map"></div>
         </td>
         <td id="map-st">
         <div id="logo"><strong><br/><br/></strong>
+        <img src="photo.jpg" width="180px" height="180px" style="float: right">
         </div>
         <div id="streets">
           <br class="grid"/>
@@ -50,7 +51,7 @@
           <input class="grid" type="text" max = 2 size = 3 placeholder="Sate" id="state"/> 
           <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/> 
           <br class="grid"/>
-          <button class="grid" onclick="recenter()">Recenter Map</button>
+          <button class="grid" onclick="recenter()" style="float: center">Recenter Map</button>
           <ul class="grid"><em>
           <li><h4>Instructions for use:</h4></li>
           <li>Draw a polygon that represents your client's delivery zone by selecting the pentagon near the zoom controls on the upper left and clicking at least three times on the map to the left.</li>
