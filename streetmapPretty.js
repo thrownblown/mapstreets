@@ -92,7 +92,7 @@ function init() {
     testBox(geoJsonPoly.geometry.coordinates[0]);
     $('.leaflet-draw-inner-toolbar').show();
     $('.grid').remove();
-    $('#streets').prepend('<button type="button" class="btn btn-default btn-md grid" onclick="twoFer()"><span class="glyphicon glyphicon-road" style="margin-left: 5px"></span> Show Streets</button>');
+    $('#streets').prepend('<button type="button" class="btn btn-default btn-md grid" onclick="twoFer()"><span class="glyphicon glyphicon-road" style="margin-left: 5px"></span>Show Streets</button>');
   });
 
   map.on('draw:edited', function (e) {
