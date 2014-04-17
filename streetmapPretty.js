@@ -39,7 +39,7 @@ function init() {
   var geoClick = MQ.geocode().on('success', function(e) {
     $('#logo strong').remove();
     var desc = geoClick.describeLocation(e.result.best);
-    $('#logo').prepend('<strong class="grid">' + desc + '</strong>')
+    $('#logo').prepend('<strong>' + desc + '</strong>')
   });
    
   map.on('click', function(e) {
@@ -92,7 +92,7 @@ function init() {
     testBox(geoJsonPoly.geometry.coordinates[0]);
     $('.leaflet-draw-inner-toolbar').show();
     $('.grid').remove();
-    $('#streets').prepend('<br class="grid"/><button class="grid" onclick="twoFer()">Show Streets</button><br class="grid"/>');
+    $('#streets').prepend('<button type="button" class="btn btn-default btn-md grid" onclick="twoFer()"><span class="glyphicon glyphicon-road" style="margin-left: 5px"></span> Show Streets</button>');
 
   });
 
