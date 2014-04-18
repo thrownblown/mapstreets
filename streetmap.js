@@ -111,7 +111,7 @@ function init() {
     testBox(geoJsonPoly.geometry.coordinates[0]);
     $('.leaflet-draw-inner-toolbar').show();
     $('.grid').remove();
-    $('#streets').prepend('<button type="button" class="btn btn-default btn-md grid" onclick="twoFer()"><span class="glyphicon glyphicon-road" style="margin-left: 5px"></span>Show Streets</button>');
+    $('#show').removeClass('disabled')
   });
 
   map.on('draw:edited', function (e) {
@@ -127,6 +127,8 @@ function init() {
   map.on('draw:deleted', function(e) {
     $('.leaflet-draw-inner-toolbar').hide();
     geoJsonPoly = {};
+    $('#show').addClass('disabled')
+
   });
 
 }
@@ -187,7 +189,7 @@ function reverseGeo(){
         var perc = parseInt(2+(streets.length/gridLen) * 100);
         console.log(perc);
         $('.progress-bar')
-          .css('width', perc+'%').attr('aria-valuenow', perc);    
+          .css('width', perc + '%').attr('aria-valuenow', perc);    
         streets.push(data.results[0].locations[0].street);
         if ((strLen%20)===0){
           streetSplit(streets)
@@ -195,7 +197,10 @@ function reverseGeo(){
         if (perc>95){
           streetSplit(streets);
           $('#streets h2').remove();
-          $('#streets table').prepend('<tr><td><h2>COMPLETE</h2></td></tr>')
+          $('#streets table').prepend('<tr><td><h2>COMPLETE</h2></td></tr>');
+          $('.progress').removeClass('active');
+          $('#show').addClass('disabled')
+
         }
       }
     });
@@ -246,15 +251,12 @@ function twoFer(){
   applyGrid();
   reverseGeo();
   $('.grid').remove();
-   // $('#logo').after('<div class="progress progress-striped active"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>');
 }
 
 function recenter(){
   var city = document.getElementById('city').value || 'Dolores Park, San Francisco, 94110';
-  var state = document.getElementById('state').value;
-  var zip = document.getElementById('zip').value; 
   $.ajax({
-    url: 'http://www.mapquestapi.com/geocoding/v1/address?&key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56&location=' + city + ',' + state + ' ' + zip,
+    url: 'http://www.mapquestapi.com/geocoding/v1/address?&key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56&location=' + city,
     dataType: 'jsonp',
     type: 'POST',
     contentType:'json',
