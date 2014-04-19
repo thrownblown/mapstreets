@@ -2,14 +2,18 @@ html { height: 100% }
 
 body { height: 100%; margin: 0; padding: 0 }
 
-#map { vertical-align: top; height: 1400px; width: 975px }
+#map { 
+  vertical-align: top; 
+  height: 1400px; 
+  width: 975px; 
+ }
 
 #map-td { 
   vertical-align: top; 
   width: 975px; 
   background-image: url('013.jpg'); 
   background-size: 100%;
-  text-align: left
+  text-align: left;
 }
 
 #map-st { 
