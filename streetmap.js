@@ -1917,7 +1917,6 @@ function reverseGeo(){
           $('#streets table').prepend('<tr><td><h2>COMPLETE</h2></td></tr>');
           $('.progress').removeClass('active');
           $('#show').addClass('disabled')
-
         }
       }
     });
@@ -2019,7 +2018,10 @@ var substringMatcher = function(strs) {
   };
 };
  
-var cities = ['Mexico City', 'Your Mom', 'Minneapolis',
+var cities = [
+'Mexico City',
+'Your Mom',
+'Minneapolis',
 'New York',
 'Toronto',
 'Los Angeles',
@@ -2119,8 +2121,7 @@ var cities = ['Mexico City', 'Your Mom', 'Minneapolis',
 'Sacramento',
 'Mesa',
 'Apodaca',
-'Venuice',
-
+'Venuice'
 ];
  
 $('#recity .typeahead').typeahead(
