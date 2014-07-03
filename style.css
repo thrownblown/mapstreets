@@ -1,0 +1,66 @@
+html { height: 100% }
+
+body { height: 100%; margin: 0; padding: 0 }
+
+#map { 
+  vertical-align: top; 
+  height: 1400px; 
+  width: 975px; 
+ }
+
+#map-td { 
+  vertical-align: top; 
+  width: 975px; 
+  background-image: url('013.jpg'); 
+  background-size: 100%;
+  text-align: left;
+}
+
+#map-st { 
+  vertical-align: top; 
+  width: 320px;
+}
+
+#logo{
+  height: 180px;
+  margin-right:10px; 
+  vertical-align: text-top;
+/*  background-image: url('photo.jpg'); 
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 60%;*/
+  }
+.container{
+   float: left; 
+   text-align: left
+}
+.grid{
+  margin-left: 8px; 
+  margin-right: 8px; 
+  padding-top: 4; 
+  padding-left: 0
+}
+.leaflet-draw-inner-toolbar { 
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  display: none;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.map-nav{
+  width: 100%;
+  margin-top:0px;
+  padding-left:10px; 
+  margin-right:10px
+}
+
+#recity .tt-dropdown-menu {
+  overflow-y: auto;
+  background: none repeat 0 0 rgba(155, 155, 155, 0.8);
+}
+.ascii {
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+}

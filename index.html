@@ -9,44 +9,17 @@
     <link rel="stylesheet" href="./bower_components/leaflet.draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-<!--     <link rel="stylesheet" href="style.css"/>
- -->    
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map { vertical-align: top; height: 1300px; width: 975px }
-      #map-td { vertical-align: top; width: 975px; background-image: url('013.jpg'); background-size: 100% }
-      #map-st { 
-        vertical-align: top; 
-        width: 320px;
-      }
-      #logo{
-        height: 180px;
-        margin-right:10px; 
-        background-image: url('photo.jpg'); 
-        background-repeat: no-repeat;
-        background-position: right top;
-        background-size: 60%;
-        }
-      .leaflet-draw-inner-toolbar { 
-        background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
-        bottom: 0;
-        display: none;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css"/>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-    <script src="./bower_components/leaflet.draw/dist/leaflet.draw.js"></script>
-    <script src="./bower_components/leaflet-pip.min.js"></script>
     <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
-<!--     // <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false" style=""></script> -->
+
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
     <script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-geocoding.js?key=Fmjtd%7Cluub2g6bl1%2Cra%3Do5-9ual56"></script>
+    <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/2.4/jquery.liveaddress.min.js"></script>
+    <script>jQuery.LiveAddress("3559812107194297503");</script>
   </head>
   <body>
     <nav class="navbar navbar-inverse" role="navigation">
@@ -58,29 +31,49 @@
           <li class="active">
             <a href="#">Home</a>
           </li>
-          <li>
-            <a href="#" class="grid" onclick="twoFer()">Show Streets</a>
-          </li>
-         
         </ul>
+            <form class="navbar-form navbar-right" role="search">
+            <div class="form-group" id="recity">
+            <input type="text"  data-provide="typeahead" class="form-control typeahead" size = 15 placeholder="What's your 20?" id="city"/> 
+            </div>
+            </form>
       </div>
     </nav>
-    <div class="container" style="float: left;" align="left">
+    <table class="map-nav">
+      <tr>
+          <td width="80%" style="padding-left: 10px">
+            <div id="pb" class="progress progress-striped progress progress-danger active" style="margin-top: 10px">
+              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            </div>
+          </div>
+        </td>
+        <td>
+          <button type="button" id="show" class="btn btn-default btn-md disabled" onclick="twoFer()"><span class="glyphicon glyphicon-road" style="margin: 2px"></span>$how $treets!</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-default btn-md" onclick="recenter()">
+            <span class="glyphicon glyphicon-globe" style="margin: 2px"></span> Recenter Map
+          </button>
+        </td>
+        <td width="3%">
+        </td>
+      </tr>
+    </table>
+  
+            
     <table width=1285>
       <tr>
-        <td id="map-td" style="text-align:left;">
+        <td id="map-td">
         <div id="map"></div>
         </td>
         <td id="map-st">
-        <div id="logo"><strong><br/><br/></strong><br/>
+        <div id="logo"><strong><br/><br/></strong>
+        <a href="http://www.tcbcourier.com">
+        <img src="photo.jpg" width="180px" height="180px" style="float: right">
+        </a>
         </div>
+        <br/>
         <div id="streets">
-          <br class="grid"/>
-          <input class="grid" type="text" placeholder="What's your 20?" id="city"/> 
-          <input class="grid" type="text" max = 2 size = 2 placeholder="ST" id="state"/> 
-          <input class="grid" type="text" max = 5 size = 5 placeholder="Zip" id="zip"/> 
-          <br class="grid"/>
-          <button class="grid" onclick="recenter()">Recenter Map</button>
           <ul class="grid"><em>
           <li><h4>Instructions for use:</h4></li>
           <li>Draw a polygon that represents your client's delivery zone by selecting the pentagon near the zoom controls on the upper left and clicking at least three times on the map to the left.</li>
@@ -94,16 +87,77 @@
           <li><b>A</b>: No. That's not the purpose of the Mapulator. <a href="http://www.twinjet.co">Twin Jet</a> will have a similar functionality built in. For the meantime you could print out Mapulator and rubber-cement it all together zine style (remember zines...?)</li><br/>
           <li><b>Q</b>: Once a polygon has been made, can we allow for fine tuning like in Google maps? Adding points and dragging them around to really dial in the zone?</li>
           <li><b>A</b>: I have just ported this completely over to OSM & MapQuest. You can edit the polygon now by clicking on the pencil above the trash can.</li><br/>
+          <li><b>Q</b>: Who are those two guys hiding behind the maps?</li>
+          <li><b>A</b>: They are members of <a href="http://en.wikipedia.org/wiki/Nestor_Makhno">Nestor Makhno's</a> <a href="http://en.wikipedia.org/wiki/Revolutionary_Insurrectionary_Army_of_Ukraine">Black Army</a>.</li><br/>
           <li><b>Q</b>: Will there be the ability to do multiple zones, or the ability to save and refresh these zone maps?</li>
           <li><b>A</b>: Yes in <a href="http://www.twinjet.co">TwinJet.co</a></li><br/>
           </ul>
-          <table></table>
+          <table>
+          </table>
         </div>
         </td>
       </tr>
     </table>
-    </div>
+<div class="ascii">
+<PRE>
+<B>WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</B>
+<B>WWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWWBWW</B>
+<B>WWmWBWmWmWBWmWmWBWmWmWBWmWmWBWmWmWY???4WmWBWmWBWmWmWBWmWmWBWmWmWBWmWmWBWmWB</B>
+<B>WWWWBWWWWWBWWWWWBWWWWWBWWWWWBWWWP'</B>    <B>]WWWBWWWBWWWWWBWWWWWBWWWWWBWWWWWBWWWW</B>
+<B>WBBWmWmWmWBWmWmWBWmWmWBWmWmWBWmW</B> .:...<B>]WmWBWmWBWmWmWBWmWmWBWmWmWBWmWmWBWmWm</B>
+<B>WWWBWWWWWBWWWBWWBWWWWBWWWBWWBWW[</B> .....<B>]WWWBWWWBWWWWBWWWBWWBWWWWBWWWBWWBWWWW</B>
+<B>WWmWWmWmWBWmWBWmWWmWmWWmWBWmWWm</B> ...q<B>QPjQWmWWmWBWmWmWWmWBWmWWmWmWWmWBWmWWmWm</B>
+<B>WWWBWWWWBWWWBWWWWmWWWWmWWBWWWm4</B>....<B>WWWWWBWWmWWBWWWWBWWBWWWWmWWWWmWWBWWWmWWW</B>
+<B>WBBWBBBWBWmWBWmWmWWBBWWWmWWmWW[</B> :.<B>]WWmWWWBWWWmWWmWmWBWmWmWmWWBBWWWmWWmWWWmW</B>
+<B>WWWBWWWmWWWBWWW7BWWBWBBWWBWWBP[</B> ..<B>]WBWWmWBWmWWWmWWWWBW4WWWWWmWWBBWWBWWBWmWW</B>
+<B>WWmWWmWWWmWBWmWm7mWBWWWmWBWmWW[</B> :.<B>]WWBWWWBWWBWmWWmWmW\WWmWmWWWmWWmWBWmWWWWB</B>
+<B>WWWBWWBWmWWBWWWBm7mWWmWWBWWWB6[</B> ..<B>]WWBWmWBWmWWWWmWWW\QWWWBWWmWWWBWWBWWWmWmW</B>
+<B>WBBWBWBWWWmWWmWBWm</B>p<B>4WWBWBWmWBPL</B> .:J<B>WWmWWWBWWWmWmWWP</B>j<B>WWWmWWBWWBWmWWmWWmWWWWW</B>
+<B>WWWBWBWBBWWWmWWBWWW</B>,<B>4WBWBWWBWWJ</B>:...<B>4WWBmWBWmWWWWWP</B>j<B>WWBWWBWmWmWBWWmWWBWWmWmW</B>
+<B>WWmWWBWWWmWmWWBWBWm6</B>.<B>4WWBWmWWm$,</B>...:<B>??]BWWBWWmWmP</B>j<B>WBWBWmWWWWWWBWBWWBWBWWBWW</B>
+<B>WWWBWBWmWWBWWBWBWBWWW,"WWBWWmWW\</B>:...  <B>]WBWBWmWW'</B>j<B>\QWBWBWWmWmWmWWBWmWWBWmWWm</B>
+<B>WBBWBWBWWmWWmWWBWWBWBW</B>.J<B>WWBWWWBW</B>p.:..:<B>]WWmWWWW'</B>q<B>\QWWBWWBWWBWWWWmWWWWmWWWBWW</B>
+<B>WWWBWBWBWWWmWWmWWmWWBW6</B>.J<B>WWmWmWWW</B>q....<B>]WBWWmD'</B>q<B>\QWWWBWmWBWBWmWmWWmWmWWmWBWm</B>
+<B>WWmWWBWWmWmWWBWWmWWmWWBQ</B> )<B>$WWWWmWW$PWWWWWmWP</B>.j<B>\QWWWmWWWWBWBWWWWWmWWWWmWWWBW</B>
+<B>WWWBWBWmWWWP???????????mm</B>  <B>4WmWWWmWWWWBWmWP</B> j<B>'QWY?????4WWBWBWmWmWWBWmWWBWmW</B>
+<B>WBBWBWBWWBPW</B>p          <B>WW6</B>..<B>4WWmWWBWmWBWWP</B> <B>.\mWW</B>f     .-<B>4WWBWWBWWBWBWWBWBWW</B>
+<B>WWWBWBWWmWWmW</B>, ........<B>WWBg</B> :<B>?WWBWBWWBWB"</B>._<B>'mWWP</B>f:.....:.<B>4WWmWWBWBWWBWBWWBW</B>
+<B>WWmWWBWmWWmWP6</B> :..:..:.<B>WWBP^</B>-<B>W4WBWBWmWWWP</B> <B>?QWWBW</B>f=....:..<B>]WWWBWmWWmWBWBWmWW</B>
+<B>WWWBWBWWWBWWW76a</B>p ..j<B>aamWWW</B>p:J<B>WWWmWWWWmP</B>  <B>7]WBW6</B>f=..<B>jL</B>:..<B>)WBWBWWWmWWWBWWWWm</B>
+<B>WBBWBWBWmWWmWmWh'</B>=..<B>]WmWWmWW</B>p J<B>WBWWmWmP</B> .<B>7</B>q<B>WmWWm(</B> ..<B>jW</B>...]<B>WWmWWmWWWmWBWmWmW</B>
+<B>WWWBWBWBWWmWWWBDf</B>...<B>]WWWBWWmW</B>p.J<B>WWBWWP</B> :<B>7]WWWBVU</B>f...<B>)'</B>:..<B>]WBWWmWWmWWWBWWWWW</B>
+<B>WWmWWBWWBWWWmWWW</B>p...<B>]WWBWBWWBW</B>p J<B>WWBP</B> .<B>/</B>q<B>WWmWW6</B>  :.. :...<B>jQWBWWWmWWmWBWmWmW</B>
+<B>WWWBWBWmWBWmWWmW[</B> ..<B>]WWBWWmWBWB</B>p.J<B>WP</B> .<B>7</B>q<B>QWBWWmm6</B> ...:...<B>4QWWBWmWWWmWWWBWWWB</B>
+<B>WBBWBWBWWBWWWmWW[</B> .:<B>]WWBWmWWWBWW</B>p <B>7</B>  <B>/</B>q<B>WWmWWmWW7</B>f.......:<B>4WWmWWWmWWWmWBWmWW</B>
+<B>WWWBWBWWmWWmWWWZ[</B> :.<B>]WWmWWWmWBWmm/</B>..<B>/</B>q<B>QWBWWmWWmW</B>[...<B>j</B>g;..J<B>WWWWmWWBWmWWWBWWm</B>
+<B>WWmWWBWmWWmWWmWW</B>p...<B>]WWWWmWWWBWWP</B>.:<B>7</B>j<B>QWWWBWWWBWm</B>f...<B>jW</B>..:.<B>WWmWWBWBWWWmWWmWW</B>
+<B>WWWBWBWWWBWWmWW6(</B> ..<B>]WBBWWBWmWBP</B> .<B>/</B>q<B>")mWmWBWmWWm</B>f...<B>jP</B>....<B>WWWBWBWBWmWWBWWWm</B>
+<B>WBBWBWBWmWWmWWBW[</B> ..<B>]WWWmWBWWWP</B>':<B>/</B>q<B>Q</B>p J<B>WWWWmWWBP</B>f:..<B>"</B>..:._<B>WWmWWBWBWWBWBWmWW</B>
+<B>WWWBWBWBWWmWWWBD[</B> ..<B>]WWmWWWmWZ</B>':<B>7</B>q<B>QWW</B>p J<B>WBWWWmWW</B>f........<B>]WWWWmWWBWmWWBWWBW</B>
+<B>WWmWWBWWBWWWmWWB[</B> ..<B>]WWWWmWWD`</B>.g<B>\WWBWm</B>p.J<B>WWmWWWL</B>f:..:..:j<B>WWBWmWWmWWWWmWBWBW</B>
+<B>WWWBWBWmWBWmWWmm\aaajWWmWWBB'</B>.g<B>\WBWBWWm</B>p.<B>)mWWmWBaaa</B>gg<B>aaaBWWBWWWmWWmWmWWWmWW</B>
+<B>WBBWBWBWWBWWWmWW6WmJQWBWWmW'</B>.g<B>\QWWBWBWBW</B>p J<B>WBWWBmQ#dmWWmWBWBWmWWWBWWWWmWWWm</B>
+<B>WWWBWBWWmWWmWWWBWWBWWWBWmWW^</B>=<B>?QWWBWBWBWW?</B> <B>4$WWmWWmWWWBWBWWmWWWBWmWWmWmWWmWW</B>
+<B>WWmWWBWmWWmWWmWBWmWWBWBWWW"</B>;j<B>"wWBWBWWBWm6</B> .<B>4WBWWmWWmWWmWWmWWmWBWWWmWWWWmWWm</B>
+<B>WWWBWBWWWBWWBWWBWWWmWWmWB'</B>=q<B>\mWWBWWmWBWWW6</B>p <B>4WWmWWBWWmWWBWWBWWBWmWWWmWmWWBW</B>
+<B>WBBWBWBWmWWmWWmWWmWWWmWWP</B> q<B>\QWWmWWmWWWmWmWW</B>p <B>4WWWBWWmWWBWBWBWBWWWBWmWWWWBWW</B>
+<B>WWWBWBWBWWmWWBWWmWWmWWW?</B> p<B>wWWWmWWBWWmWWWWBWm</B>p.<B>4WBWBWWWmWWBWWBWBBWBWWWmWmWWm</B>
+<B>WWmWWBWWBWWWmWWmWWBWWm?</B> <B>/ymWmWWWBWBWWWmWmWWWWa</B> <B>4WWBWmWWWmWBWmWWWmWBWmWWWWmW</B>
+<B>WWWBWBWmWBWmWWBWWBWWmP</B>:<B>7jQWWWWmWWmWWmWWWWBWmWmw</B> <B>4WWBWWmWWWBWWWmWWWBWWWmWmWW</B>
+<B>WBBWBWBWWBWWWmWWmWWmP</B>_<B>jWWWWmWmWWmWWBWWmWmWWBWWm6</B>.<B>4WWmWWBWmWWmWWBWmWWmWWWWWB</B>
+<B>WWWBWBWWmWWmWWWmWWBP</B>j<B>mWmWWmWWWWmWWBWBWBWWBWBWmWWg</B>p<B>4WWBWBWWBWWBWBWWBWWBWmWmW</B>
+<B>WWmWWBWmWWmWWmWWWmP</B>j<B>QWBWWmWWBWmWWBWWBWBWmWWBWWWmWm/4WWmWWmWBWmWWmWWmWBWWBWW</B>
+<B>WWWBWBWWWBWWBWWmWP</B>q<B>QWZWWmE$BWBWWBWBWBWWmWWmWBWmWWmQ</B>p<B>4WWWmWWWmWWmWWmWWBWmWWm</B>
+<B>WBBWBWBWmWWmWWmWPaWWZ</B>j<B>dWW</B>jp<B>WW#4)mW[r4W#4WW</B> <B>wWB[</B>p<B>WWBWa4WmWWmWWWBWWBWWBWBWWmW</B>
+<B>WWWBWBWBWWmWWBWPjWWm[dQWW][WB#]</B>)<B>WB[\WW#]WB</B> <B>4WW[\WWBWmJ$BWWWBWmWWmWWmWWBWBWW</B>
+<B>WWmWWBWWBWWWmWWyWWWW6]WBW][WWm]</B>j<B>WW[/QW#]WW</B> <B>WWm[7WBWBWWLWWmWBWWWmWWBWWmWWBWB</B>
+<B>WWWBWBWmWBWmWWmWWBWmWaJWWaamWWajQB66jWQJWWaamW66mWWBWBWWWWBWBWmWWBWBWWWmWWB</B>
+<B>WBBWBWBWWBWWWmWWBWBWWmWWWmmWWmWWWWWWWWmWWmBmWWBWWWmWWBWWmWBWWmWWBWBWBWmWWmW</B>
+<B>WWWBWBWWmWWmWWWBWBWWmWWWmWWWmWWmWmWmWWWWBWWWWmWBWmWWmWWmWWWmWWWBWBWWBWWWmWW</B>
+<B>WWmWWBWmWWmWWmWBWWmWWWmWWWBWWWmWWWWWBWmWWBWmWWWBWWWmWWBWWmWWWmWBWWmWBWmWWWB</B>
+<B>WWWBWBWWWBWWBWWBWmWWmWWWmWBWmWWWmWmWBWWBWBWWWmWBWmWWWBWBWWWmWWBWBWWWBWWBWmW</B>
+</PRE>
+</div>
     <script type="text/javascript" src="./streetmap.js"></script>
   </body>
 </html>
-
